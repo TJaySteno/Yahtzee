@@ -1,29 +1,24 @@
-const dice = [1,1,1,2,2,2,3,3,3,4,4,4,5,5,5,6,6,6];
-let sorted;
-
-const sortDice = () => sorted = dice.sort();
-
 const myFilter = (num) => dice.filter((value) => value === num);
-
 const sum = (arr) => arr.reduce(( acc, cur) => acc + cur, 0);
 
-function scoreNum(numeral, name) {
+const scoreNum = (numeral, name) => {
 	let filtered = myFilter(numeral);
 	upperScores[name] = sum(filtered);
 };
 
+//scoreRuns and scoreSets could be cleaned up
 function scoreSets(oak, fh, name) {
-	sortDice();
+	dice.sort();
 	let j = 0;
 	let k = 0;
 	let d = 0;
-	for (let i = 0; i < sorted.length; i++) {
-		if ( sorted[i] === sorted[i+1] && d === 0 ) {
+	for (let i = 0; i < dice.length; i++) {
+		if ( dice[i] === dice[i+1] && d === 0 ) {
 			j++;
-			d = sorted[i];
-		} else if ( sorted[i] === sorted[i+1] && d === sorted[i] ) {
+			d = dice[i];
+		} else if ( dice[i] === dice[i+1] && d === dice[i] ) {
 			j++;
-		} else if ( sorted[i] === sorted[i+1] && d !== sorted[i] ) {
+		} else if ( dice[i] === dice[i+1] && d !== dice[i] ) {
 			k++;
 		}
 	}
@@ -36,19 +31,19 @@ function scoreSets(oak, fh, name) {
 			lowerScores[name] += 100;
 		}
 	} else if ( !fh && j >= oak ) {
-		lowerScores[name] = sum(sorted);
+		lowerScores[name] = sum(dice);
 	}
 }
 
-function scoreRuns(len, name, score) {
+function scoreRuns(len, score, name) {
 	let j = 0;
-	for (let i = 0; i < sorted.length; i++) {
-		if ( sorted[i]+1 === sorted [i+1] ) {
+	for (let i = 0; i < dice.length; i++) {
+		if ( dice[i]+1 === dice [i+1] ) {
 			j++;
 		}
 	}
 	if ( j >= len ) {
-		lowerScores[name] = score;
+		lowerScores[name] = score
 	}
 };
 
@@ -63,8 +58,8 @@ const scoring = {
 	threeOAK: () => scoreSets(2, false, 'threeOAK'),
 	fourOAK: () => scoreSets(3, false, 'fourOAK'),
 	fullHouse: () => scoreSets(2, true, 'fullHouse'),
-	sStraight: () => scoreRuns(3, 'sStraight', 30),
-	lStraight: () => scoreRuns(4, 'lStraight', 40),
+	sStraight: () => scoreRuns(3, 30, 'sStraight'),
+	lStraight: () => scoreRuns(4, 40, 'lStraight'),
 	yahztee: () => scoreSets(4, false, 'yahztee'),
 	chance: () => lowerScores.chance = sum(dice)
 };
@@ -95,15 +90,3 @@ const getTotal = () => {
 	total.total = total.upper + total.lower;
 	console.log(total);
 };
-
-function scrollScores() {
-	for (let prop in scoring) {
-		scoring[prop]();
-	}
-	console.log(upperScores);
-	console.log(lowerScores);
-};
-
-scrollScores();
-
-getTotal();
