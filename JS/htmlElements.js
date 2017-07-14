@@ -13,19 +13,9 @@ const totalScore = document.querySelector('#totalScore').lastElementChild;
 let dice = [];
 let rollsLeft = 2;
 let round = 0;
+let preventYahtzee = false;
 
-const scrollInput = () => {
-	let option;
-	for (let i = 0; i < radioInput.length; i++) {
-		if (radioInput[i].checked) {
-			option = radioInput[i].id;
-			radioInput[i].checked = false;
-			//Replace radio with '-'
-		};
-	};
-	return option;
-};
-
+//Add event listeners
 for (let i = 0; i < 5; i++) {
 	diceButtons[i].addEventListener('click', function() {
 		if (diceButtons[i].title === 'Rerolling') {
@@ -40,17 +30,17 @@ rollButton.addEventListener('click', function() {
 	if (rollsLeft > 0) {
 		reroll();
 		rollsLeft--;
-		updateRollButton();
+		printRollButton();
 	};
 });
 
 scoreButton.addEventListener('click', function() {
 	let option = scrollInput();
 	if (!option) {
-		alert('Please choose a scoring option');
+		alert('Please choose a scoring option.');
+	} else if (preventYahtzee === true && option === 'yahtzee') {
+		alert("Don't be greedy bro! Please pick something besides another Yahtzee.");
 	} else {
 		scoring[option]();
-		printScores();
-		newRound();
 	};
 });

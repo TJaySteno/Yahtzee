@@ -1,9 +1,17 @@
+//Store scores
+const upperScores = {};
+const lowerScores = {};
+const total = {};
+
+//Scoring functions
 const myFilter = (num) => dice.filter((value) => value === num);
+
 const sum = (arr) => arr.reduce(( acc, cur) => acc + cur, 0);
 
 const scoreNum = (numeral, name) => {
 	let filtered = myFilter(numeral);
 	upperScores[name] = sum(filtered);
+	newRound();
 };
 
 //scoreRuns and scoreSets could be cleaned up
@@ -23,20 +31,33 @@ function scoreSets(oak, fh, name) {
 		};
 	};
 	if (fh && (( j === 1 && k === 2 ) || ( j === 2 && k === 1 ))) {
+		//Score fullHouse
 		lowerScores[name] = 25;
-	} else if ( oak === 4 && j >= oak ) {
+		newRound();
+	} else if ( oak === 4 && j === oak ) {
 		if (!lowerScores.yahtzee) {
+			//Score first Yahtzee
 			lowerScores[name] = 50;
+			newRound();
 		} else {
+			//Score second Yahtzee
 			lowerScores[name] += 100;
-			//Select second option
+			preventYahtzee = true;
+			alert('Congrats! Select a second scoring option. The upper section is scored per usual, the lower section is automatically scored.');
 		};
 	} else if ( !fh && j >= oak ) {
+		//Score 3/4 of a kind
 		lowerScores[name] = sum(dice);
-	};
+		newRound();
+	} else {
+		
+		lowerScores[name] = 0;
+		newRound();
+	}
 };
 
 function scoreRuns(len, score, name) {
+	dice.sort();
 	let j = 0;
 	for (let i = 0; i < dice.length; i++) {
 		if ( dice[i]+1 === dice [i+1] ) {
@@ -44,8 +65,11 @@ function scoreRuns(len, score, name) {
 		};
 	};
 	if ( j >= len ) {
-		lowerScores[name] = score
-	};
+		lowerScores[name] = score;
+	} else {
+		lowerScores[name] = 0;
+	}
+	newRound();
 };
 
 const scoring = {
@@ -62,28 +86,27 @@ const scoring = {
 	sStraight: () => scoreRuns(3, 30, 'sStraight'),
 	lStraight: () => scoreRuns(4, 40, 'lStraight'),
 	yahtzee: () => scoreSets(4, false, 'yahtzee'),
-	chance: () => lowerScores.chance = sum(dice)
+	chance: () => {
+		lowerScores.chance = sum(dice);
+		newRound();
+	}
 };
 
-//Store scores
-const upperScores = {};
-const lowerScores = {};
-const total = {};
-
-function scoreSum(obj) {
+const addScore = (obj) => {
 	let sum = 0;
 	for (let prop in obj) {
 		sum += obj[prop];
 	};
 	return sum;
 };
-	
+
 const getTotal = () => {
-	total.upper = scoreSum(upperScores);
+	total.upper = addScore(upperScores);
 	if ( total.upper >= 63 && !upperScores.bonus ) {
 		upperScores.bonus = 35;
-		total.upper = scoreSum(upperScores);
+		document.getElementById('bonus').textContent = upperScores.bonus;
+		total.upper = addScore(upperScores);
 	};
-	total.lower = scoreSum(lowerScores);
+	total.lower = addScore(lowerScores);
 	total.total = total.upper + total.lower;
 };

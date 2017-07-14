@@ -1,21 +1,10 @@
-//Get html elements
-
-//Round
-	//Roll dice
-	//Choose dice to reroll (twice)
-	//Choose scoring option
-		//Score
-			//Update scorecard
-			//Store scores
-
-function scrollScores() {
-	for (let prop in scoring) {
-		scoring[prop]();
-	};
-};
+//To Do
+	//High scores
+		//Find a way to store persistant values
+		//Use endGame() to store values
+	//Remove radio in scrollInput()
+	//Clean up scoreRuns(), scoreSets()
+	//Yahtzee
+		//if 0, preventYahtzee = true
 
 newRound();
-
-scrollScores();
-
-printScores();
