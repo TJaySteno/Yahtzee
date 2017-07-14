@@ -35,12 +35,11 @@ rollButton.addEventListener('click', function() {
 });
 
 scoreButton.addEventListener('click', function() {
-	let option = scrollInput();
-	if (!option) {
+	const element = scrollInput();
+	if (!element) {
 		alert('Please choose a scoring option.');
-	} else if (preventYahtzee === true && option === 'yahtzee') {
-		alert("Don't be greedy bro! Please pick something besides another Yahtzee.");
 	} else {
-		scoring[option]();
+		scoring[element.id]();
+		printTR(element);
 	};
 });

@@ -42,15 +42,14 @@ const endGame = () => {
 
 //HTML functions
 const scrollInput = () => {
-	let option;
+	let id;
 	for (let i = 0; i < radioInput.length; i++) {
 		if (radioInput[i].checked) {
-			option = radioInput[i].id;
-			radioInput[i].checked = false;
-			//Replace radio with '-'
+			id = radioInput[i];
+			radioInput[i].checked = false; //If we replace radio with - no need to remove check
 		};
 	};
-	return option;
+	return id;
 };
 
 //Print functions
@@ -64,15 +63,20 @@ const printDice = () => {
 	};
 };
 
-const printScores = () => {
-	for (let i = 0; i < radioInput.length; i++) {
-		let id = radioInput[i].id;
-		if (upperScores[id]) {
-			radioInput[i].parentNode.parentNode.parentNode.lastElementChild.textContent = upperScores[id];
-		} else if (lowerScores[id]) {
-			radioInput[i].parentNode.parentNode.parentNode.lastElementChild.textContent = lowerScores[id];
-		};
+const printTR = (element) => {
+	//Passed from scoreButton evt
+	let tr = element.parentNode.parentNode.parentNode;
+	if (element.id !== 'yahtzee' || (element.id === 'yahtzee' && lowerScores.yahtzee === 0)) {
+		tr.firstElementChild.innerHTML = '---';
 	};
+	if (upperScores[element.id] || upperScores[element.id] === 0) {
+		tr.lastElementChild.textContent = upperScores[element.id];
+	} else if (lowerScores[element.id] || lowerScores[element.id] === 0) {
+		tr.lastElementChild.textContent = lowerScores[element.id];
+	};
+};
+
+const printScores = () => {
 	getTotal();
 	upperScore.textContent = total.upper;
 	lowerScore.textContent = total.lower;

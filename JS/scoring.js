@@ -8,14 +8,14 @@ const myFilter = (num) => dice.filter((value) => value === num);
 
 const sum = (arr) => arr.reduce(( acc, cur) => acc + cur, 0);
 
-const scoreNum = (numeral, name) => {
+const scoreNum = (numeral, id) => {
+	//Score upper scores
 	let filtered = myFilter(numeral);
-	upperScores[name] = sum(filtered);
+	upperScores[id] = sum(filtered);
 	newRound();
 };
 
-//scoreRuns and scoreSets could be cleaned up
-function scoreSets(oak, fh, name) {
+function scoreSets(oak, fh, id) {
 	dice.sort();
 	let j = 0;
 	let k = 0;
@@ -32,31 +32,38 @@ function scoreSets(oak, fh, name) {
 	};
 	if (fh && (( j === 1 && k === 2 ) || ( j === 2 && k === 1 ))) {
 		//Score fullHouse
-		lowerScores[name] = 25;
+		lowerScores[id] = 25;
 		newRound();
-	} else if ( oak === 4 && j === oak ) {
-		if (!lowerScores.yahtzee) {
-			//Score first Yahtzee
-			lowerScores[name] = 50;
-			newRound();
-		} else {
-			//Score second Yahtzee
-			lowerScores[name] += 100;
-			preventYahtzee = true;
-			alert('Congrats! Select a second scoring option. The upper section is scored per usual, the lower section is automatically scored.');
-		};
-	} else if ( !fh && j >= oak ) {
+	} else if (oak === 4 && j === 4) {
+		scoreYahtzee(id);
+	} else if (!fh && j >= oak) {
 		//Score 3/4 of a kind
-		lowerScores[name] = sum(dice);
+		lowerScores[id] = sum(dice);
 		newRound();
 	} else {
-		
-		lowerScores[name] = 0;
+		//Failed to score a set
+		lowerScores[id] = 0;
 		newRound();
 	}
 };
 
-function scoreRuns(len, score, name) {
+const scoreYahtzee = (id) => {
+	if (!lowerScores.yahtzee) {
+		//Score first Yahtzee
+		lowerScores[id] = 50;
+		newRound();
+	} else if (preventYahtzee) {
+		//Prevent repeated Yahtzees
+		alert("Don't be greedy bro! Please pick something besides another Yahtzee.");
+	} else {
+		//Score second Yahtzee
+		lowerScores[id] += 100;
+		preventYahtzee = true;
+		alert('Congrats! Select a second scoring option. The upper section is scored per usual, the lower section is automatically scored.');
+	};
+};
+
+function scoreRuns(len, score, id) {
 	dice.sort();
 	let j = 0;
 	for (let i = 0; i < dice.length; i++) {
@@ -65,9 +72,11 @@ function scoreRuns(len, score, name) {
 		};
 	};
 	if ( j >= len ) {
-		lowerScores[name] = score;
+		//Scored a run
+		lowerScores[id] = score;
 	} else {
-		lowerScores[name] = 0;
+		//Failed to score a run
+		lowerScores[id] = 0;
 	}
 	newRound();
 };

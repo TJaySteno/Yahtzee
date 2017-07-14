@@ -1,1 +1,1 @@
-//high scores
+//High scores
