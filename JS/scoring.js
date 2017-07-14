@@ -88,5 +88,4 @@ const getTotal = () => {
 	}
 	total.lower = scoreSum(lowerScores);
 	total.total = total.upper + total.lower;
-	console.log(total);
 };

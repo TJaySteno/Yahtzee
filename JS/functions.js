@@ -1,24 +1,28 @@
 const d = () => Math.floor(Math.random() * 6 ) + 1;
 
+const printDice = () => {
+	for (let i = 0; i < 5; i++) {
+		diceButtons[i].textContent = dice[i];
+	};
+};
+
 const rollDice = () => {
 	dice = [];
 	for (let i = 0; i < 5; i++) {
 		dice.push(d());
 	};
+	dice.sort();
+	printDice();
 };
 
-
-//rollDice()
-	//get html
-	//roll dice
-	//sort
-	//write dice to buttons
-	
-//roll()
-	//forEach
-		//if 'rerolling'
-			//roll
-			//print roll
+const reroll = () => {
+	for (let i = 0; i < 5; i++) {
+		if (diceButtons[i].title === 'Rerolling') {
+			dice[i] = d();
+		};
+	};
+	printDice();
+};
 
 //updateScores()
 	//get html
@@ -41,10 +45,16 @@ const rollDice = () => {
 	//get html
 	//print rolls
 
-//newRound()
-	//round++
-	//rolls = 3
-	//updateRoundCounter()
-	//updateRollButton()
+const newRound = () => {
+	round++;
+	rolls = 2;
+	updateRoundCounter();
+	updateRollButton();
+	if (round === 13) {
+		endGame();
+	};
+};
 
 //endGame()
+	//alert/print score
+	//update high scores
