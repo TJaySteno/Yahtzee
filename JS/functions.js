@@ -10,7 +10,8 @@ const printDice = () => {
 
 const printScores = () => {
 	for (let i = 0; i < radioInput; i++) {
-		//let id = 
+		let id = radioInput[i].id;
+		console.log(id);
 		//get id
 		//if id
 		//radioInput[i].parentNode.parentNode.parentNode.lastElementChild.textContent = //upperScore.id
