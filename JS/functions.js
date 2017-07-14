@@ -42,14 +42,14 @@ const endGame = () => {
 
 //HTML functions
 const scrollInput = () => {
-	let id;
+	let element;
 	for (let i = 0; i < radioInput.length; i++) {
 		if (radioInput[i].checked) {
-			id = radioInput[i];
+			element = radioInput[i];
 			radioInput[i].checked = false; //If we replace radio with - no need to remove check
 		};
 	};
-	return id;
+	return element;
 };
 
 //Print functions
@@ -63,17 +63,25 @@ const printDice = () => {
 	};
 };
 
-const printTR = (element) => {
-	//Passed from scoreButton evt
-	let tr = element.parentNode.parentNode.parentNode;
-	if (element.id !== 'yahtzee' || (element.id === 'yahtzee' && lowerScores.yahtzee === 0)) {
+const removeRadio = (element, tr) => {
+	if (element.id !== 'yahtzee' || ((lowerScores.yahtzee === 0) || overwriteYahtzee === true)) {
 		tr.firstElementChild.innerHTML = '---';
 	};
+};
+
+const printOneScore = (element, tr) => {
 	if (upperScores[element.id] || upperScores[element.id] === 0) {
 		tr.lastElementChild.textContent = upperScores[element.id];
 	} else if (lowerScores[element.id] || lowerScores[element.id] === 0) {
 		tr.lastElementChild.textContent = lowerScores[element.id];
 	};
+};
+
+const printTR = (element) => {
+	//Passed from scoreButton evt
+	let tr = element.parentNode.parentNode.parentNode;
+	removeRadio(element, tr);
+	printOneScore(element, tr);
 };
 
 const printScores = () => {

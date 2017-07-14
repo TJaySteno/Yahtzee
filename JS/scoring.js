@@ -37,12 +37,16 @@ function scoreSets(oak, fh, id) {
 	} else if (oak === 4 && j === 4) {
 		scoreYahtzee(id);
 	} else if (!fh && j >= oak) {
-		//Score 3/4 of a kind
+		//Score 3 4 of a kind
 		lowerScores[id] = sum(dice);
 		newRound();
 	} else {
 		//Failed to score a set
-		lowerScores[id] = 0;
+		if (!lowerScores[id]) {
+			lowerScores[id] = 0;
+		} else {
+			overwriteYahtzee = true;
+		};
 		newRound();
 	}
 };

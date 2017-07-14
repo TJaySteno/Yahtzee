@@ -14,6 +14,7 @@ let dice = [];
 let rollsLeft = 2;
 let round = 0;
 let preventYahtzee = false;
+let overwriteYahtzee = false;
 
 //Add event listeners
 for (let i = 0; i < 5; i++) {

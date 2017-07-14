@@ -1,6 +1,5 @@
 //To Do first
-	//Separate Yahtzee logic into separate function
-		//if yahtzee = 50 then yahtzee again, turns to 0
+	//Second Yahztee should only be able to score if valid
 
 //To Do later
 	//High scores
