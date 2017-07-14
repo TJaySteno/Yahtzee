@@ -8,6 +8,42 @@ const printDice = () => {
 	};
 };
 
+const printScores = () => {
+	for (let i = 0; i < radioInput; i++) {
+		//let id = 
+		//get id
+		//if id
+		//radioInput[i].parentNode.parentNode.parentNode.lastElementChild.textContent = //upperScore.id
+	}
+		/*
+		const radioInput = document.querySelectorAll('input');
+		input.div.td.tr.lasttd
+				<tr class="scorecard" id="two">
+					<td>
+						<div class="radio">
+							<input type="radio" name="optradio" id="two">
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Twos</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Sum of twos</label>
+						</div>
+					</td>
+					<td></td>
+				</tr> */
+		//console.log(upperScore[word]);
+		// let scorecard = document.getElementById(prop).lastElementChild;
+	getTotal();
+	upperScore.textContent = total.upper;
+	lowerScore.textContent = total.lower;
+	totalScore.textContent = total.total;
+};
+
 const rollDice = () => {
 	dice = [];
 	for (let i = 0; i < 5; i++) {
@@ -26,16 +62,9 @@ const reroll = () => {
 	printDice();
 };
 
-const printScores = () => {
-	getTotal();
-	upperScore.textContent = total.upper;
-	lowerScore.textContent = total.lower;
-	totalScore.textContent = total.total;
-};
-
 const newRound = () => {
 	round++;
-	rolls = 2;
+	rollsLeft = 2;
 	updateRoundCounter();
 	updateRollButton();
 	if (round === 13) {

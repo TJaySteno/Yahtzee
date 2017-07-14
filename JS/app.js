@@ -15,3 +15,7 @@ function scrollScores() {
 };
 
 newRound();
+
+scrollScores();
+
+printScores();

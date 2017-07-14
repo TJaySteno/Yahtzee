@@ -20,31 +20,32 @@ function scoreSets(oak, fh, name) {
 			j++;
 		} else if ( dice[i] === dice[i+1] && d !== dice[i] ) {
 			k++;
-		}
-	}
+		};
+	};
 	if (fh && (( j === 1 && k === 2 ) || ( j === 2 && k === 1 ))) {
 		lowerScores[name] = 25;
 	} else if ( oak === 4 && j >= oak ) {
-		if (!lowerScores.yahztee) {
+		if (!lowerScores.yahtzee) {
 			lowerScores[name] = 50;
 		} else {
 			lowerScores[name] += 100;
-		}
+			//Select second option
+		};
 	} else if ( !fh && j >= oak ) {
 		lowerScores[name] = sum(dice);
-	}
-}
+	};
+};
 
 function scoreRuns(len, score, name) {
 	let j = 0;
 	for (let i = 0; i < dice.length; i++) {
 		if ( dice[i]+1 === dice [i+1] ) {
 			j++;
-		}
-	}
+		};
+	};
 	if ( j >= len ) {
 		lowerScores[name] = score
-	}
+	};
 };
 
 const scoring = {
@@ -60,7 +61,7 @@ const scoring = {
 	fullHouse: () => scoreSets(2, true, 'fullHouse'),
 	sStraight: () => scoreRuns(3, 30, 'sStraight'),
 	lStraight: () => scoreRuns(4, 40, 'lStraight'),
-	yahztee: () => scoreSets(4, false, 'yahztee'),
+	yahtzee: () => scoreSets(4, false, 'yahtzee'),
 	chance: () => lowerScores.chance = sum(dice)
 };
 
@@ -71,9 +72,9 @@ const total = {};
 
 function scoreSum(obj) {
 	let sum = 0;
-	for (var prop in obj) {
+	for (let prop in obj) {
 		sum += obj[prop];
-	}
+	};
 	return sum;
 };
 	
@@ -82,7 +83,7 @@ const getTotal = () => {
 	if ( total.upper >= 63 && !upperScores.bonus ) {
 		upperScores.bonus = 35;
 		total.upper = scoreSum(upperScores);
-	}
+	};
 	total.lower = scoreSum(lowerScores);
 	total.total = total.upper + total.lower;
 };
