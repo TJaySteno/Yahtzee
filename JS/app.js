@@ -8,14 +8,10 @@
 			//Update scorecard
 			//Store scores
 
-rollDice();
-
 function scrollScores() {
 	for (let prop in scoring) {
 		scoring[prop]();
 	};
 };
 
-scrollScores();
-
-getTotal();
+newRound();

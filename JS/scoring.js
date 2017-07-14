@@ -76,10 +76,7 @@ function scoreSum(obj) {
 	}
 	return sum;
 };
-
-//If 63+
-	//upperScores.bonus = 35
-	//scoreSum
+	
 const getTotal = () => {
 	total.upper = scoreSum(upperScores);
 	if ( total.upper >= 63 && !upperScores.bonus ) {

@@ -1,7 +1,3 @@
-/**********************************************************
-VARIABLES
-**********************************************************/
-
 //Find page elements
 const roundCounter = document.querySelector('#roundCounter');
 const diceDiv = document.querySelector('.dice');
@@ -16,6 +12,7 @@ const totalScore = document.querySelector('#totalScore');
 //Create variables
 let dice = [];
 let rollsLeft = 2;
+let round = 0;
 
 //Event listeners
 	//Dice buttons
