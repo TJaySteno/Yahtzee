@@ -4,6 +4,7 @@ const diceDiv = document.querySelector('.dice');
 const diceButtons = Array.from(diceDiv.children);
 const rollButton = document.querySelector('#rollButton');
 const scoreButton = rollButton.nextElementSibling;
+const highScore = scoreButton.parentNode.nextElementSibling;
 const radioInput = document.querySelectorAll('input');
 const upperScore = document.querySelector('#upperScore').lastElementChild;
 const lowerScore = document.querySelector('#lowerScore').lastElementChild;
@@ -36,11 +37,15 @@ rollButton.addEventListener('click', function() {
 });
 
 scoreButton.addEventListener('click', function() {
-	const element = scrollInput();
+	//scrollInput() (functions 44)
+	//element returns as first null value, overwrites that score
+	let element = scrollInput();
 	if (!element) {
 		alert('Please choose a scoring option.');
 	} else {
-		scoring[element.id]();
+		score[element.id]();
+		//remove radioInput[i]?
+		console.log(upperScores.one);
 		printTR(element);
 	};
 });

@@ -36,20 +36,19 @@ const newRound = () => {
 
 const endGame = () => {
 	printScores();
-	alert(`Congrats! Your final score was ${total.total}.`);
-	//Update high scores
+	const name = prompt(`Congrats! Your final score was ${total.total}. Please enter your name.`);
+	printHighScore(total.total, name);
 };
 
 //HTML functions
 const scrollInput = () => {
-	let element;
+	//radioInput (html 8)
 	for (let i = 0; i < radioInput.length; i++) {
 		if (radioInput[i].checked) {
-			element = radioInput[i];
-			radioInput[i].checked = false; //If we replace radio with - no need to remove check
+			const radio = radioInput[i];
+			return radio;
 		};
 	};
-	return element;
 };
 
 //Print functions
@@ -65,7 +64,7 @@ const printDice = () => {
 
 const removeRadio = (element, tr) => {
 	if (element.id !== 'yahtzee' || ((lowerScores.yahtzee === 0) || overwriteYahtzee === true)) {
-		tr.firstElementChild.innerHTML = '---';
+		tr.firstElementChild.textContent = '---';
 	};
 };
 
@@ -78,7 +77,7 @@ const printOneScore = (element, tr) => {
 };
 
 const printTR = (element) => {
-	//Passed from scoreButton evt
+	//Passed from scoreButton (html 39)
 	let tr = element.parentNode.parentNode.parentNode;
 	removeRadio(element, tr);
 	printOneScore(element, tr);
@@ -89,4 +88,8 @@ const printScores = () => {
 	upperScore.textContent = total.upper;
 	lowerScore.textContent = total.lower;
 	totalScore.textContent = total.total;
+};
+
+const printHighScore = () => {
+	highScore.textContent = `High Score: ${localStorage.highScore}, ${localStorage.name}`;
 };

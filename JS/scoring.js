@@ -85,7 +85,7 @@ function scoreRuns(len, score, id) {
 	newRound();
 };
 
-const scoring = {
+const score = {
 	one: () => scoreNum(1, 'one'),
 	two: () => scoreNum(2, 'two'),
 	three: () => scoreNum(3, 'three'),
