@@ -47,8 +47,9 @@ const endGame = () => {
 		name: name,
 		date: `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`
 	}
-	updateHighScores(finalScore);
-	printHighScore();
+	highScores.push(finalScore);
+	updateHighScores();
+	printHighScores();
 };
 
 //HTML functions
@@ -105,10 +106,15 @@ const printScoreSums = () => {
 	totalScore.textContent = total.total;
 };
 
-const printHighScore = () => {
+const printHighScores = () => {
 	//Update highScore element with current high score
 	if (highScores.length) {
 		const date = new Date();
-		highScore.textContent = `High score: ${highScores[0].name}, ${highScores[0].score} points - ${highScores[0].date}`
+		let message = 'High scores<br>';
+		highScores.forEach(function (highScore) {
+			message += `${highScore.name}, ${highScore.score} points - ${highScore.date}<br>`;
+		});
+		highScore.innerHTML = message;
 	}
+	
 };

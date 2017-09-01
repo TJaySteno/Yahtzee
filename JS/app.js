@@ -1,2 +1,2 @@
-printHighScore();
+printHighScores();
 newRound();
