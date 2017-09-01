@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Yahtzee!</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="../css/normalize.css">
+		<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,700,900" rel="stylesheet">
+		<link rel="stylesheet" href="../css/main.css">
+	</head>
+	<header>
+		<h1>Yahtzee!</h1>
+		<div>
+			<p id="roundCounter">Round 1 of 13</p>
+		</div>
+	</header>
+	<body>
+		<div class="lrDiv">
+			<div class="dice">
+				<button id="d1" class="dice" title="Rerolling">d1</button>
+				<button id="d2" class="dice" title="Rerolling">d2</button>
+				<button id="d3" class="dice" title="Rerolling">d3</button>
+				<button id="d4" class="dice" title="Rerolling">d4</button>
+				<button id="d5" class="dice" title="Rerolling">d5</button>
+			</div>
+			<div class="levelTwo">
+				<button type="button" id="rollButton">Roll Button</button>
+				<button type="button" id="scoreButton">Score Now</button>
+			</div>
+		</div>
+		<table class="lrDiv">
+			<thead>
+				<tr class="scorecard" class="header1">
+					<th>Scorecard</th>
+				</tr>
+			</thead>
+			<tbody>
+				<form>
+				<tr class="scorecard" class="header2" id="upper">
+					<td>
+-						<div class="radiotext">
+							<label>Upper</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Rule</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Scoring</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Points</label>
+						</div>
+					</td>
+				</tr>
+				<tr class="scorecard" id="one">
+					<td>
+						<div class="radio">
+							<input type="radio" name="optradio" id="one">
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Aces</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Sum of ones</label>
+						</div>
+					</td>
+					<td></td>
+				</tr>
+				<tr class="scorecard" id="two">
+					<td>
+						<div class="radio">
+							<input type="radio" name="optradio" id="two">
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Twos</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Sum of twos</label>
+						</div>
+					</td>
+					<td></td>
+				</tr>
+				<tr class="scorecard" id="three">
+					<td>
+						<div class="radio">
+							<input type="radio" name="optradio" id="three">
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Threes</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Sum of threes</label>
+						</div>
+					</td>
+					<td></td>
+				</tr>
+				<tr class="scorecard" id="four">
+					<td>
+						<div class="radio">
+							<input type="radio" name="optradio" id="four">
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Fours</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Sum of fours</label>
+						</div>
+					</td>
+					<td></td>
+				</tr>
+				<tr class="scorecard" id="five">
+					<td>
+						<div class="radio">
+							<input type="radio" name="optradio" id="five">
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Fives</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Sum of fives</label>
+						</div>
+					</td>
+					<td></td>
+				</tr>
+				<tr class="scorecard" id="six">
+					<td>
+						<div class="radio">
+							<input type="radio" name="optradio" id="six">
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Sixes</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Sum of sixes</label>
+						</div>
+					</td>
+					<td></td>
+				</tr>
+				<tr class="scorecard" class="score" id="bonus">
+					<td>
+						<div class="radiotext">
+							<label> </label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>If 63+ scored</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>35 bonus points</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label> </label>
+						</div>
+					</td>
+				</tr>
+				<tr class="scorecard" class="score" id="upperScore">
+					<td>
+						<div class="radiotext">
+							<label>Upper Score</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label> </label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label> </label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>0</label>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr class="scorecard" class="header2" id="lower">
+					<td>
+						<div class="radiotext">
+							<label>Lower</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Rule</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Scoring</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Points</label>
+						</div>
+					</td>
+				</tr>
+				<tr class="scorecard" id="threeOAK">
+					<td>
+						<div class="radio">
+							<input type="radio" name="optradio" id="threeOAK">
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Three of a Kind</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Sum of all dice</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label></label>
+						</div>
+					</td>
+				</tr>
+				<tr class="scorecard" id="fourOAK">
+					<td>
+						<div class="radio">
+							<input type="radio" name="optradio" id="fourOAK">
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Four of a Kind</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Sum of all dice</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label></label>
+						</div>
+					</td>
+				</tr>
+				<tr class="scorecard" id="fullHouse">
+					<td>
+						<div class="radio">
+							<input type="radio" name="optradio" id="fullHouse">
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Full House</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>25 points</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label></label>
+						</div>
+					</td>
+				</tr>
+				<tr class="scorecard" id="sStraight">
+					<td>
+						<div class="radio">
+							<input type="radio" name="optradio" id="sStraight">
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Small Straight</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>30 points</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label></label>
+						</div>
+					</td>
+				</tr>
+				<tr class="scorecard" id="lStraight">
+					<td>
+						<div class="radio">
+							<input type="radio" name="optradio" id="lStraight">
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Large Straight</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>40 points</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label></label>
+						</div>
+					</td>
+				</tr>
+				<tr class="scorecard" id="yahtzee">
+					<td>
+						<div class="radio">
+							<input type="radio" name="optradio" id="yahtzee">
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Yahtzee</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>First: 50, After: 100</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label></label>
+						</div>
+					</td>
+				</tr>
+				<tr class="scorecard" id="chance">
+					<td>
+						<div class="radio">
+							<input type="radio" name="optradio" id="chance">
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Chance</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>Sum of all dice</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label></label>
+						</div>
+					</td>
+				</tr>
+				<tr class="scorecard" class="score" id="lowerScore">
+					<td>
+						<div class="radiotext">
+							<label>Lower Score</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label></label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label></label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>0</label>
+						</div>
+					</td>
+				</tr>
+				<tr class="scorecard" class="score" id="totalScore">
+					<td>
+						<div class="radiotext">
+							<label>Total Score</label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label></label>
+						</div>
+					</td>	
+					<td>
+						<div class="radiotext">
+							<label></label>
+						</div>
+					</td>
+					<td>
+						<div class="radiotext">
+							<label>0</label>
+						</div>
+					</td>
+					</tr>
+				</form>
+			</tbody>
+		</table>
+		<script src="../jquery-3.2.1.min.js"></script>
+		<script src="htmlElements.js"></script>
+		<script src="functions.js"></script>
+		<script src="scoring.js"></script>
+		<script src="highScores.js"></script>
+		<script src="app.js"></script>
+	</body>
+	<footer>
+		<p id="trent">Trent Stenoien, 2017</p>
+	</footer>
+</html>
