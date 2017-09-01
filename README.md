@@ -16,9 +16,6 @@ Future changes to be made:
 		Create functions with internal function?
 
 To Do later
-	High scores
-		Find a way to store persistant values
-		Use endGame() to store values
 	Clean up scoreRuns(), scoreSets()
 	printScoreSums(arg) to avoid looping through everything every time
 	
@@ -27,18 +24,3 @@ localStorage
 		Track top 10
 			Add score to array
 			Sort
-			
-upperScores.one = 6;
-upperScores.two = 12;
-upperScores.three = 18;
-upperScores.four = 24;
-upperScores.five = 30;
-upperScores.six = 36;
-
-lowerScores.threeOAK = 36;
-lowerScores.fourOAK = 36;
-lowerScores.fullHouse = 25;
-lowerScores.sStraight = 30;
-lowerScores.lStraight = 40;
-lowerScores.yahtzee = 50;
-lowerScores.chance = 36;
