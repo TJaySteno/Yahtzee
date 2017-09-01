@@ -20,6 +20,7 @@ function scoreSets(oak, fh, id) {
 	let j = 0;
 	let k = 0;
 	let d = 0;
+	//Count sets
 	for (let i = 0; i < dice.length; i++) {
 		if ( dice[i] === dice[i+1] && d === 0 ) {
 			j++;
@@ -30,6 +31,7 @@ function scoreSets(oak, fh, id) {
 			k++;
 		};
 	};
+	//Evaluate sets
 	if (fh && (( j === 1 && k === 2 ) || ( j === 2 && k === 1 ))) {
 		//Score fullHouse
 		lowerScores[id] = 25;

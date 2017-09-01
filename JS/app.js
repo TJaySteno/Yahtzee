@@ -11,11 +11,6 @@
 	//Clean up scoreRuns(), scoreSets()
 	//printScores(arg) to avoid looping through everything every time
 	
+//
 //printHighScore();
 newRound();
-
-
-//need to remove the item from the array or skip over it
-	//scrollInput() functions 44
-	//scoreButton html 39
-	//removeRadio() functions 63

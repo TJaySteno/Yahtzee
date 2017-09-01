@@ -42,7 +42,6 @@ const endGame = () => {
 
 //HTML functions
 const scrollInput = () => {
-	//radioInput (html 8)
 	for (let i = 0; i < radioInput.length; i++) {
 		if (radioInput[i].checked) {
 			const radio = radioInput[i];
@@ -64,6 +63,7 @@ const printDice = () => {
 
 const removeRadio = (element, tr) => {
 	if (element.id !== 'yahtzee' || ((lowerScores.yahtzee === 0) || overwriteYahtzee === true)) {
+		element.checked = false;
 		tr.firstElementChild.textContent = '---';
 	};
 };
@@ -77,7 +77,6 @@ const printOneScore = (element, tr) => {
 };
 
 const printTR = (element) => {
-	//Passed from scoreButton (html 39)
 	let tr = element.parentNode.parentNode.parentNode;
 	removeRadio(element, tr);
 	printOneScore(element, tr);

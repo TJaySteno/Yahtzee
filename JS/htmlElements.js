@@ -37,15 +37,11 @@ rollButton.addEventListener('click', function() {
 });
 
 scoreButton.addEventListener('click', function() {
-	//scrollInput() (functions 44)
-	//element returns as first null value, overwrites that score
 	let element = scrollInput();
 	if (!element) {
 		alert('Please choose a scoring option.');
 	} else {
 		score[element.id]();
-		//remove radioInput[i]?
-		console.log(upperScores.one);
 		printTR(element);
 	};
 });
