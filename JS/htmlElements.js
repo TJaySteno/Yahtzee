@@ -9,16 +9,16 @@ const radioInput = document.querySelectorAll('input');
 const upperScore = document.querySelector('#upperScore').lastElementChild;
 const lowerScore = document.querySelector('#lowerScore').lastElementChild;
 const totalScore = document.querySelector('#totalScore').lastElementChild;
+const bonus = document.getElementById('bonus');
 
 //Create variables
 let dice = [];
 let rollsLeft = 2;
 let round = 0;
-let preventYahtzee = false;
-let overwriteYahtzee = false;
 
 //Add event listeners
 for (let i = 0; i < 5; i++) {
+	//Select which dice to keep vs reroll
 	diceButtons[i].addEventListener('click', function() {
 		if (diceButtons[i].title === 'Rerolling') {
 			diceButtons[i].title = 'Keeping';
@@ -29,6 +29,7 @@ for (let i = 0; i < 5; i++) {
 };
 
 rollButton.addEventListener('click', function() {
+	//Reroll selected dice
 	if (rollsLeft > 0) {
 		reroll();
 		rollsLeft--;
@@ -37,15 +38,12 @@ rollButton.addEventListener('click', function() {
 });
 
 scoreButton.addEventListener('click', function() {
-	//scrollInput() (functions 44)
-	//element returns as first null value, overwrites that score
+	//Find selected scoring option and run scoring function
 	let element = scrollInput();
 	if (!element) {
 		alert('Please choose a scoring option.');
 	} else {
 		score[element.id]();
-		//remove radioInput[i]?
-		console.log(upperScores.one);
 		printTR(element);
 	};
 });

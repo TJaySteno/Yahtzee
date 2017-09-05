@@ -3,23 +3,32 @@ const upperScores = {};
 const lowerScores = {};
 const total = {};
 
-//Scoring functions
-const myFilter = (num) => dice.filter((value) => value === num);
+//Yahtzee variables
+let preventYahtzee = false;
+let overwriteYahtzee = false;
+
+//Fundamental functions
+const is = (num) => dice.filter((value) => value === num);
+	//Return an array with every instance of 'num'
 
 const sum = (arr) => arr.reduce(( acc, cur) => acc + cur, 0);
+	//Add the sum of an array
 
-const scoreNum = (numeral, id) => {
+//Scoring functions
+const scoreNum = (num, id) => {
 	//Score upper scores
-	let filtered = myFilter(numeral);
+	let filtered = is(num);
 	upperScores[id] = sum(filtered);
 	newRound();
 };
 
 function scoreSets(oak, fh, id) {
+	//Score 3, 4, and 5 of a kind
 	dice.sort();
 	let j = 0;
 	let k = 0;
 	let d = 0;
+	//Check for sets
 	for (let i = 0; i < dice.length; i++) {
 		if ( dice[i] === dice[i+1] && d === 0 ) {
 			j++;
@@ -30,14 +39,16 @@ function scoreSets(oak, fh, id) {
 			k++;
 		};
 	};
+	//Evaluate sets
 	if (fh && (( j === 1 && k === 2 ) || ( j === 2 && k === 1 ))) {
 		//Score fullHouse
 		lowerScores[id] = 25;
 		newRound();
 	} else if (oak === 4 && j === 4) {
+		//Score Yahtzee
 		scoreYahtzee(id);
 	} else if (!fh && j >= oak) {
-		//Score 3 4 of a kind
+		//Score 3 or 4 of a kind
 		lowerScores[id] = sum(dice);
 		newRound();
 	} else {
@@ -52,29 +63,33 @@ function scoreSets(oak, fh, id) {
 };
 
 const scoreYahtzee = (id) => {
+	//Score Yahtzee
 	if (!lowerScores.yahtzee) {
 		//Score first Yahtzee
 		lowerScores[id] = 50;
 		newRound();
 	} else if (preventYahtzee) {
-		//Prevent repeated Yahtzees
+		//Prevent 2 Yahtzees from being scored with the same dice
 		alert("Don't be greedy bro! Please pick something besides another Yahtzee.");
 	} else {
 		//Score second Yahtzee
 		lowerScores[id] += 100;
 		preventYahtzee = true;
-		alert('Congrats! Select a second scoring option. The upper section is scored per usual, the lower section is automatically scored.');
+		alert('Congrats! Select a second scoring option. The upper section is scored per usual, the lower section is always considered passing.');
 	};
 };
 
 function scoreRuns(len, score, id) {
+	//Score small and large straights
 	dice.sort();
 	let j = 0;
+	//Check for run
 	for (let i = 0; i < dice.length; i++) {
 		if ( dice[i]+1 === dice [i+1] ) {
 			j++;
 		};
 	};
+	//Evaluate run
 	if ( j >= len ) {
 		//Scored a run
 		lowerScores[id] = score;
@@ -86,6 +101,7 @@ function scoreRuns(len, score, id) {
 };
 
 const score = {
+	//Call scoring functions
 	one: () => scoreNum(1, 'one'),
 	two: () => scoreNum(2, 'two'),
 	three: () => scoreNum(3, 'three'),
@@ -106,6 +122,7 @@ const score = {
 };
 
 const addScore = (obj) => {
+	//Add and return scores in 'obj'
 	let sum = 0;
 	for (let prop in obj) {
 		sum += obj[prop];
@@ -114,10 +131,11 @@ const addScore = (obj) => {
 };
 
 const getTotal = () => {
+	//Add and store current points
 	total.upper = addScore(upperScores);
 	if ( total.upper >= 63 && !upperScores.bonus ) {
 		upperScores.bonus = 35;
-		document.getElementById('bonus').textContent = upperScores.bonus;
+		bonus.textContent = upperScores.bonus;
 		total.upper = addScore(upperScores);
 	};
 	total.lower = addScore(lowerScores);

@@ -1,9 +1,26 @@
 Welcome to Yahtzee!
 
-Currently in development.
+I created this app as a challenge for myself in the first couple of months I started learning JavaScript (March 2017) and the first version was complete two weeks later. What you see here is the second version of that app which has been refactored to be easier to read and DRY.
 
-I created a Yahtzee game as a challenge for myself and turns out it's quite a bit more challenging than I thought. I have 99% of the code done, but I'm having trouble with one last thing and I was hoping I could get some help.
+My focus with this project and my learning in general has been the JavaScript. At some point I may improve the webpage design, but for now just know that my focus has been on functionality of this and other apps.
 
-What's happening is that as the user uses different options on the scorecard, I replace the HTML radio input with a string, '---'.
+Thank you and enjoy!
+Trent Stenoien
 
-When I go to loop through the radio buttons, my function returns the first one that's been replaced and overwrites the score in place. For example if I score 1 then 2, the first round will be fine then when I score the second round, upperScores[one] is overwritten and the following error shows. "Uncaught TypeError: Cannot read property 'parentNode' of null at printTR (functions.js:80) at HTMLButtonElement.<anonymous> (htmlElements.js:48)"
+
+
+Future changes to be made:
+	Second Yahztee should only be able to score if valid
+	Incorporate closures
+		Get rid of all global variables
+		Create functions with internal function?
+
+To Do later
+	Clean up scoreRuns(), scoreSets()
+	printScoreSums(arg) to avoid looping through everything every time
+	
+localStorage
+	Create array high scores
+		Track top 10
+			Add score to array
+			Sort
