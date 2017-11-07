@@ -116,5 +116,4 @@ const printHighScores = () => {
 		});
 		highScore.innerHTML = message;
 	}
-	
 };

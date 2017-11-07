@@ -5,5 +5,4 @@ I created this app as a challenge for myself in the first couple of months I sta
 My focus with this project and my learning in general has been the JavaScript. At some point I may improve the webpage design, but for now just know that my focus has been on functionality of this and other apps.
 
 Thank you and enjoy!
-
 Trent Stenoien
