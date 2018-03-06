@@ -28,10 +28,10 @@ h1 {
 body {
 	font-family: 'Roboto', sans-serif;
 	background: #8e0000;
-    background: -webkit-linear-gradient(#420000, #c60000);
-    background: -o-linear-gradient(#420000, #c60000);
-    background: -moz-linear-gradient(#420000, #c60000);
-    background: linear-gradient(#420000, #c60000);
+    background: -webkit-linear-gradient(left, #420000, #c60000);
+    background: -o-linear-gradient(right, #420000, #c60000);
+    background: -moz-linear-gradient(right, #420000, #c60000);
+    background: linear-gradient(to right, #420000, #c60000);
 }
 
 #roundCounter {
@@ -88,7 +88,6 @@ button:focus {
 	background-color: #888;
 	padding-top: 0;
 }
-
 
 
 /*************************************************
