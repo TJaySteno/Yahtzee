@@ -1,18 +1,36 @@
-// Future changes to be made:
-	// Second Yahztee should only be able to score if valid
-	// Incorporate closures
-		// Get rid of all global variables
-		// Create functions with internal function?
+(function () {
+  //High scores
+  let highScores;
 
-// To Do later
-	// Clean up scoreRuns(), scoreSets()
-	// printScoreSums(arg) to avoid looping through everything every time
-	
-// localStorage
-	// Create array high scores
-		// Track top 10
-			// Add score to array
-			// Sort
+  // Parse existing high scores or start a new set;
+  if (localStorage.highScores) {
+    highScores = JSON.parse(localStorage.highScores);
+  } else {
+    highScores = new Array();
+  }
 
-printHighScores();
-newRound();
+  const sortHighScores = () => {
+    // Sort scores from highest to lowest and keep only the top 10
+    highScores.sort(function (a, b) {
+      return b.score - a.score;
+    });
+
+    if (highScores.length > 10) {
+      highScores.pop();
+    }
+  };
+
+  const updateHighScores = () => {
+    //Store high scores in local storage
+    sortHighScores();
+    if (typeof (Storage) !== undefined) {
+      localStorage.setItem(highScores, JSON.stringify(highScores));
+    } else {
+      throw Error('Sorry! No Web Storage support');
+    }
+  };
+
+})();
+
+// printHighScores();
+// newRound();

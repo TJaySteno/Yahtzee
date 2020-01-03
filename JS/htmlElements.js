@@ -18,32 +18,32 @@ let round = 0;
 
 //Add event listeners
 for (let i = 0; i < 5; i++) {
-	//Select which dice to keep vs reroll
-	diceButtons[i].addEventListener('click', function() {
-		if (diceButtons[i].title === 'Rerolling') {
-			diceButtons[i].title = 'Keeping';
-		} else {
-			diceButtons[i].title = 'Rerolling';
-		};
-	});
+  //Select which dice to keep vs reroll
+  diceButtons[i].addEventListener('click', function () {
+    if (diceButtons[i].title === 'Rerolling') {
+      diceButtons[i].title = 'Keeping';
+    } else {
+      diceButtons[i].title = 'Rerolling';
+    };
+  });
 };
 
-rollButton.addEventListener('click', function() {
-	//Reroll selected dice
-	if (rollsLeft > 0) {
-		reroll();
-		rollsLeft--;
-		printRollButton();
-	};
+rollButton.addEventListener('click', function () {
+  //Reroll selected dice
+  if (rollsLeft > 0) {
+    reroll();
+    rollsLeft--;
+    printRollButton();
+  };
 });
 
-scoreButton.addEventListener('click', function() {
-	//Find selected scoring option and run scoring function
-	let element = scrollInput();
-	if (!element) {
-		alert('Please choose a scoring option.');
-	} else {
-		score[element.id]();
-		printTR(element);
-	};
+scoreButton.addEventListener('click', function () {
+  //Find selected scoring option and run scoring function
+  let element = scrollInput();
+  if (!element) {
+    alert('Please choose a scoring option.');
+  } else {
+    score[element.id]();
+    printTR(element);
+  };
 });
