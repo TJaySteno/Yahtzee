@@ -22,6 +22,10 @@ const yahtzee = (function () {
   let dice = [];
   let rollsLeft = 2;
   let round = 0;
+  let disallowFutureYahtzees = false;
+  const upperScores = {};
+  const lowerScores = {};
+  const total = {};
 
   /* Event listeners */
   for (let i = 0; i < 5; i++) {
@@ -53,6 +57,7 @@ const yahtzee = (function () {
       } else {
         score[element.id]();
         printTableRow(element);
+        if (element.id !== 'yahtzee') newRound();
       };
     } else {
       newGame();
@@ -94,6 +99,8 @@ const yahtzee = (function () {
     printScoreSums();
     round++;
 
+    console.log(round);
+
     if (round > 13) {
       highScore.textContent = `Congrats! Your final score was ${total.total}.`;
       scoreButton.textContent = 'Play Again?';
@@ -125,12 +132,13 @@ const yahtzee = (function () {
     };
   };
 
-  const disableRadio = (radio, tr) => {
-    /* Remove radio input from used scoring option */
-    if (radio.id !== 'yahtzee' || ((lowerScores.yahtzee === 0) || disallowFutureYahtzees === true)) {
-      radio.checked = false;
-      radio.disabled = true;
-    };
+  const disableRadio = radio => {
+    radio.checked = false;
+    if (radio.id == 'yahtzee' && lowerScores.yahtzee > 0) {
+      return;
+    }
+
+    radio.disabled = true;
   };
 
   const printScore = (element, tr) => {
@@ -143,12 +151,12 @@ const yahtzee = (function () {
 
   const printTableRow = radio => {
     let tr = radio.parentNode.parentNode.parentNode;
-    disableRadio(radio, tr);
+    disableRadio(radio);
     printScore(radio, tr);
   };
 
   const printScoreSums = () => {
-    getTotal();
+    getTotals();
     upperScore.textContent = total.upper;
     lowerScore.textContent = total.lower;
     totalScore.textContent = total.total;
@@ -158,108 +166,81 @@ const yahtzee = (function () {
     SCORING FUNCTIONS
   **************************/
 
-  /* Scoring variables */
-  const upperScores = {};
-  const lowerScores = {};
-  const total = {};
-  let disallowFutureYahtzees = false;
-
-  /* Return an array with every instance of given number */
   const is = num => dice.filter((value) => value === num);
-
-  /* Add the sum of an array */
   const sum = arr => arr.reduce((acc, cur) => acc + cur, 0);
 
   /* Score anything in the upper section */
   const scoreNum = (num, id) => {
     let filtered = is(num);
     upperScores[id] = sum(filtered);
-    newRound();
   };
 
   /* Score all sets: 3 of a kind, 4, Yahztee, or full house */
-  function scoreSets(oak, fh, id) {
+  function scoreSets(id, fullHouse) {
     dice.sort();
     let x = 1;
     let y = 1;
     let z = 1;
     let d = 0;
 
-    /* Tally up instances of dice */
+    /* Tally sets */
     for (let i = 0; i < dice.length; i++) {
-      if (dice[i] === dice[i + 1] && d === 0) {
-        x++;
-        d = dice[i];
-      } else if (dice[i] === dice[i + 1] && d === dice[i]) {
-        x++;
-      } else if (dice[i] === dice[i + 1] && d !== dice[i]) {
-        y++;
-      };
-    };
+      const isAPair = dice[i] === dice[i + 1];
+      const isFirstPairFound = d === 0;
+      const equalsFirstPair = d === dice[i];
+
+      if (isAPair) {
+        if (isFirstPairFound) {
+          x++;
+          d = dice[i];
+        } else if (equalsFirstPair) {
+          x++;
+        } else {
+          y++;
+        }
+      }
+    }
 
     /* Ensure we know which tally is highest (z) */
     z = x > y ? x : y;
     y = x < y ? x : y;
 
-    if (fh && z === 3 && y === 2) {
-      /* Successful full house */
-      lowerScores[id] = 25;
-      newRound();
-    } else if (oak === 5 && z === 5) {
-      /* Successful Yahtzee */
-      scoreYahtzee(id);
-    } else if (!fh && z >= oak) {
-      /* Successful 3 or 4 of a kind */
-      lowerScores[id] = sum(dice);
-      newRound();
+    const successful = testFor[id](z, y);
+
+    if (successful) {
+      if (id === 'fullHouse') lowerScores[id] = 25;
+      else if (id !== 'yahtzee') lowerScores[id] = sum(dice);
+      else scoreYahtzee();
+
     } else {
-      /* Failed to score a set */
-      if (!lowerScores[id]) {
-        lowerScores[id] = 0;
-      } else {
-        disallowFutureYahtzees = true;
-      };
-
-      newRound();
-    }
-  };
-
-  const scoreYahtzee = (id) => {
-    /* Score Yahtzee */
-    if (!lowerScores.yahtzee) {
-      /* Score first Yahtzee */
-      lowerScores[id] = 50;
-      newRound();
-    } else {
-      /* Score second Yahtzee */
-      lowerScores[id] += 100;
-      alert('Congrats! Select a second scoring option.');
-      radioYahtzee.disabled = true;
-    };
-  };
-
-  function scoreRuns(len, score, id) {
-    /* Score small and large straights */
-    dice.sort();
-    let x = 0;
-
-    /* Check for run */
-    for (let i = 0; i < dice.length; i++) {
-      if (dice[i] + 1 === dice [i + 1]) {
-        x++;
-      };
-    };
-
-    /* Evaluate run */
-    if (x >= len) {
-      /* Scored a run */
-      lowerScores[id] = score;
-    } else {
-      /* Failed to score a run */
       lowerScores[id] = 0;
-    }
+    };
 
-    newRound();
+  };
+
+  const scoreYahtzee = () => {
+    if (!lowerScores.yahtzee) {
+      lowerScores.yahtzee = 50;
+      newRound();
+    } else {
+      lowerScores.yahtzee += 100;
+      radioYahtzee.disabled = true;
+      alert('Congrats! Select a second scoring option.');
+    };
+  };
+
+  function scoreRuns(points, id) {
+    dice.sort();
+    let x = 1;
+
+    for (let i = 0; i < dice.length; i++) {
+      const isRunning = dice[i] + 1 === dice [i + 1];
+      if (isRunning) x++;
+    };
+
+    const successful = testFor[id](x);
+    if (successful) lowerScores[id] = points;
+    else lowerScores[id] = 0;
   };
 
   const score = {
@@ -271,20 +252,26 @@ const yahtzee = (function () {
     five: () => scoreNum(5, 'five'),
     six: () => scoreNum(6, 'six'),
 
-    threeOAK: () => scoreSets(3, false, 'threeOAK'),
-    fourOAK: () => scoreSets(4, false, 'fourOAK'),
-    fullHouse: () => scoreSets(3, true, 'fullHouse'),
-    sStraight: () => scoreRuns(3, 30, 'sStraight'),
-    lStraight: () => scoreRuns(4, 40, 'lStraight'),
-    yahtzee: () => scoreSets(5, false, 'yahtzee'),
-    chance: () => {
-      lowerScores.chance = sum(dice);
-      newRound();
-    },
+    threeOAK: () => scoreSets('threeOAK'),
+    fourOAK: () => scoreSets('fourOAK'),
+    fullHouse: () => scoreSets('fullHouse'),
+    sStraight: () => scoreRuns(30, 'sStraight'),
+    lStraight: () => scoreRuns(40, 'lStraight'),
+    yahtzee: () => scoreSets('yahtzee'),
+    chance: () => lowerScores.chance = sum(dice),
   };
 
-  const addScore = (obj) => {
-    /* Add and return scores in 'obj' */
+  const testFor = {
+    threeOAK: z => z >= 3 ? true : false,
+    fourOAK: z => z >= 4 ? true : false,
+    fullHouse: (z, y) => z === 3 && y === 2 ? true : false,
+    yahtzee: z => z === 5 ? true : false,
+
+    sStraight: z => z >= 4 ? true : false,
+    lStraight: z => z === 5 ? true : false,
+  };
+
+  const addScore = obj => {
     let sum = 0;
     for (let prop in obj) {
       sum += obj[prop];
@@ -293,10 +280,10 @@ const yahtzee = (function () {
     return sum;
   };
 
-  const getTotal = () => {
-    /* Add and store current points */
+  const getTotals = () => {
     total.upper = addScore(upperScores);
     if (total.upper >= 63 && !upperScores.bonus) {
+      /* Grant bonus points when upper section is 63 or higher */
       upperScores.bonus = 35;
       bonus.textContent = upperScores.bonus;
       total.upper = addScore(upperScores);
@@ -307,6 +294,7 @@ const yahtzee = (function () {
   };
 
   const newGame = () => {
+
     /* Reset game state */
     dice = [];
     rollsLeft = 2;
@@ -318,6 +306,7 @@ const yahtzee = (function () {
 
     /* Reset game board */
     scoreButton.textContent = 'Score Now';
+    bonus.textContent = '';
     printScoreSums();
     for (let i = 0; i < radioInput.length; i++) {
       radioInput[i].disabled = false;
