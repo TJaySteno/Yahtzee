@@ -99,8 +99,6 @@ const yahtzee = (function () {
     printScoreSums();
     round++;
 
-    console.log(round);
-
     if (round > 13) {
       highScore.textContent = `Congrats! Your final score was ${total.total}.`;
       scoreButton.textContent = 'Play Again?';
