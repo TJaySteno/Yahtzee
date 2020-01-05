@@ -55,8 +55,7 @@ LEFT DIV
 
 button {
 	display: inline-block;
-    vertical-align: top;
-	margin: auto;
+	vertical-align: top;
 	padding: 1%;
 	margin: 1%;
 }
@@ -80,6 +79,10 @@ button:focus {
 	background-color: #CCCC00;
 	color: white;
 	border-style: inset;
+}
+
+.rollScoreButtons {
+	
 }
 
 .highScore {
